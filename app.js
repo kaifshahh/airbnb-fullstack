@@ -21,7 +21,7 @@ const { default: mongoose } = require("mongoose");
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", path.join(__dirname, "views"));
 
 const store = new MongoDBStore({
   uri: DB_PATH,
