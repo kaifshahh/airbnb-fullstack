@@ -8,7 +8,7 @@ const multer = require("multer");
 require("dotenv").config();
 const MongoDBStore = require("connect-mongodb-session")(session);
 const DB_PATH = process.env.MONGO_URI;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 //Local Module
 const storeRouter = require("./routes/storeRouter");
