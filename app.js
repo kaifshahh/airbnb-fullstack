@@ -5,6 +5,9 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const multer = require("multer");
+const cors = require("cors");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 require("dotenv").config();
 const MongoDBStore = require("connect-mongodb-session")(session);
 const DB_PATH = process.env.MONGO_URI;
@@ -20,8 +23,21 @@ const { default: mongoose } = require("mongoose");
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+// Security Middleware
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+);
+app.use(mongoSanitize());
+
+// CORS Configuration
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 
 const store = new MongoDBStore({
   uri: DB_PATH,
@@ -48,6 +64,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(multer({ storage: multerStorage, fileFilter }).single("photo"));
 app.use(express.static(path.join(process.cwd(), "public")));
@@ -56,27 +73,18 @@ app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
 app.use("/homes/uploads", express.static(path.join(rootDir, "uploads")));
 app.use(
   session({
-    secret: "KnowledgeGate AI with Complete Coding",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store,
-  })
+  }),
 );
 
-app.use((req, res, next) => {
-  req.isLoggedIn = req.session.isLoggedIn;
-  next();
-});
+// Auth middleware handled by JWT in routes via isAuth util
 
 app.use(authRouter);
 app.use(storeRouter);
-app.use("/host", (req, res, next) => {
-  if (req.isLoggedIn) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-});
+
 app.use("/host", hostRouter);
 
 app.use(errorsController.pageNotFound);
