@@ -87,8 +87,11 @@ exports.postAddHome = (req, res, next) => {
       res.status(201).json({ message: "Home added successfully", home: home });
     })
     .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: "Failed to save home" });
+      console.error("ADD HOME ERROR:", err);
+      console.error("MESSAGE:", err.message);
+      console.error("STACK:", err.stack);
+
+      res.status(500).json({ error: err.message || "Failed to save home" });
     });
 };
 
@@ -128,7 +131,7 @@ exports.postEditHome = (req, res, next) => {
       res.json({ message: "Home updated successfully", home: result });
     })
     .catch((err) => {
-      console.log("Error while updating ", err);
+      console.error("Error while updating ", err);
       if (err.message && err.message.includes("Unauthorized")) {
         return res.status(403).json({ error: err.message });
       }
