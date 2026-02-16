@@ -68,7 +68,7 @@ exports.postAddHome = (req, res, next) => {
     return res.status(422).json({ error: "Attached file is not an image." });
   }
 
-  const photo = req.file.path.replace(/\\/g, "/"); // Normalize path separators
+  const photo = req.file.path;
   const home = new Home({
     houseName,
     price,
@@ -119,7 +119,7 @@ exports.postEditHome = (req, res, next) => {
       home.rating = rating;
       home.description = description;
       if (req.file) {
-        home.photo = req.file.path.replace(/\\/g, "/");
+        home.photo = req.file.path;
       }
       return home.save();
     })

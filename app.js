@@ -4,7 +4,6 @@ const path = require("path");
 // External Module
 const express = require("express");
 const session = require("express-session");
-const multer = require("multer");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -61,33 +60,9 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(multer({ storage: multerStorage, fileFilter }).single("photo"));
 app.use(express.static(path.join(process.cwd(), "public")));
-app.use("/uploads", express.static(path.join(rootDir, "uploads")));
-app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
-app.use("/homes/uploads", express.static(path.join(rootDir, "uploads")));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
