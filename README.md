@@ -1,97 +1,125 @@
-🏡 Airbnb Clone (Node.js + Express + EJS + MongoDB)
+# 🏡 Airbnb Clone - Fullstack Application
 
-A full-stack Airbnb clone built using Node.js, Express, EJS, and MongoDB, following the MVC architecture.
-The project includes user authentication, dynamic property listings, EJS templating, and full backend logic suitable for deployment on Vercel/Render.
+A powerful, full-stack Airbnb clone featuring a **React** frontend and a **Node.js/Express** backend. This application allows users to host properties, browse listings, and manage their favorites with real-time image uploads to **Cloudinary**.
 
-🚀 Features
-🔐 User Authentication
+---
 
-User registration
+## 🚀 Live Demo
 
-Secure login/logout
+- **Frontend:** [https://airbnb-frontend-eight.vercel.app](https://airbnb-frontend-eight.vercel.app)
+- **Backend API:** [https://airbnb-fullstack-3vpb.onrender.com](https://airbnb-fullstack-3vpb.onrender.com)
 
-Password hashing using bcryptjs
+---
 
-Session-based authentication (express-session)
+## ✨ Features
 
-🏘️ Listings System
+- **🔐 Secure Authentication:** JWT-based login and signup with secure password hashing.
+- **📸 Image Uploads:** Seamless image hosting via Cloudinary and Multer.
+- **🏘️ Hosting System:** Full CRUD functionality for hosts to add, edit, or delete their listings.
+- **❤️ Favorites/Wishlist:** Save your favorite homes to a personal wishlist.
+- **🗺️ Interactive UI:** Modern, responsive design with smooth GSAP animations.
+- **🛡️ Security:** Protected routes, CORS configuration, and Helmet for HTTP security headers.
+- **🌐 Deployment Ready:** Optimized for Vercel (Frontend) and Render (Backend).
 
-View all Airbnb-style properties
+---
 
-Individual property detail pages
+## 🛠️ Tech Stack
 
-Clean, SEO-friendly routes
+### **Frontend**
 
-Rendered dynamically with EJS
+- **Framework:** React.js (Vite)
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide-React
+- **Animations:** GSAP (GreenSock Animation Platform)
+- **Routing:** React Router DOM
 
-🎨 Frontend with EJS
+### **Backend**
 
-Reusable EJS partials: header, footer, navbar
+- **Environment:** Node.js & Express
+- **Database:** MongoDB Atlas (Mongoose ODM)
+- **Auth:** JSON Web Token (JWT)
+- **File Storage:** Cloudinary
+- **Middleware:** Multer, Helmet, CORS, Express-Validator
 
-Dynamic pages rendered from server
+---
 
-Styled using CSS / Tailwind (if you used it)
+## ⚙️ Installation & Setup
 
-🗄️ Database (MongoDB + Mongoose)
+### 1. Clone the repository
 
-MongoDB Atlas cloud database
+```bash
+git clone https://github.com/kaifshahh/airbnb-fullstack.git
+```
 
-Models for User & Listing
+### 2. Backend Setup
 
-Schema validation
+Navigate to the backend directory:
 
-.env for secure credentials
+```bash
+cd Airbnb
+npm install
+```
 
-⚙️ Additional
+Create a `.env` file in the root of the backend folder:
 
-MVC structure (Models, Views, Controllers)
+```env
+MONGO_URI=your_mongodb_uri
+PORT=3000
+JWT_SECRET=your_jwt_secret
+CLIENT_URL=http://localhost:5173
+CLOUD_NAME=your_cloudinary_name
+CLOUD_API_KEY=your_cloudinary_key
+CLOUD_API_SECRET=your_cloudinary_secret
+```
 
-Error handling middleware
+Start the backend:
 
-🛠️ Tech Stack
+```bash
+npm start
+```
 
-Node.js
+### 3. Frontend Setup
 
-Express.js
+Navigate to the frontend directory:
 
-EJS (Embedded JavaScript Templates)
+```bash
+cd ../airbnb-frontend
+npm install
+```
 
-MongoDB Atlas
+Create a `.env` file:
 
-Mongoose
+```env
+VITE_API_URL=http://localhost:3000
+```
 
-bcryptjs
+Start the frontend:
 
-express-session
+```bash
+npm run dev
+```
 
-TailwindCSS
+---
 
-✨ Future Improvements
+## 📌 API Endpoints
 
-Add booking system
+### Store
 
-Add user dashboard
+- `GET /` - Fetch all listings
+- `GET /homes/:homeId` - Get individual home details
+- `POST /favourites` - Add home to favorites (Auth Required)
 
-Add image upload for listings
+### Host
 
-Add search & filter features
+- `GET /host/host-home-list` - Fetch homes owned by host (Auth Required)
+- `POST /host/add-home` - Add a new home with image (Auth Required)
+- `POST /host/edit-home` - Update home details (Auth Required)
+- `POST /host/delete-home/:homeId` - Delete a listing (Auth Required)
 
-📌 Conclusion
+---
 
-This project demonstrates:
+## 🤝 Conclusion
 
-Back-end development with Node.js
+This project demonstrates modern full-stack development skills, including state management, RESTful API design, database modeling, and third-party service integration.
 
-Authentication and sessions
-
-Server-side rendering with EJS
-
-MongoDB database management
-
-MVC architecture
-
-Deployment workflow
-
-Git-friendly project with .gitignore
-
-Ready for deployment on Vercel / Render
+Developed with ❤️ by [Kaif Shah](https://github.com/kaifshahh)

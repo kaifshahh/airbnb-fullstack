@@ -83,6 +83,14 @@ app.use("/host", hostRouter);
 
 app.use(errorsController.pageNotFound);
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+  res.status(err.status || 500).json({
+    error: err.message || "Something went wrong on the server.",
+  });
+});
+
 mongoose
   .connect(DB_PATH)
   .then(() => {
