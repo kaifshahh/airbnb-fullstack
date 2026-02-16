@@ -3,13 +3,11 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
+  cloudinary,
+  params: async (req, file) => ({
     folder: "airbnb-homes",
-    allowed_formats: ["jpg", "jpeg", "png"],
-  },
+    resource_type: "auto",
+  }),
 });
 
-const upload = multer({ storage });
-
-module.exports = upload;
+module.exports = multer({ storage });
